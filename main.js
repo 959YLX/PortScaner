@@ -2,7 +2,9 @@ const {app, BrowserWindow} = require('electron')
 let mainWindow = null
 const indexPage = 'index.html'
 const windowSizeConfig = {
-    width: 1000,
+    minWidth: 1100,
+    minHeight: 800,
+    width: 1100,
     height: 800
 }
 

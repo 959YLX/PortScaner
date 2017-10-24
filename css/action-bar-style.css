@@ -1,0 +1,25 @@
+.action-bar-style {
+    margin: 15px auto;
+    height: fit-content;
+    padding: 0;
+}
+
+.action-bar-style div {
+    width: fit-content;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.action-bar-style div div {
+    display: inline;
+    margin: auto 5px;
+}
+
+.action-bar-style div div input {
+    width: auto;
+    display: inline;
+}
+
+.scanPort {
+    margin: auto;
+}

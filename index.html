@@ -4,31 +4,61 @@
         <meta charset="utf-8">
         <title>PortScaner</title>
         <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/nav.css">
+        <link rel="stylesheet" href="css/action-bar-style.css">
+        <link rel="stylesheet" href="css/result-view-style.css">
     </head>
     <body>
-        <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#scan-method">
-                <span class="sr-only">切换导航</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="#" class="navbar-brand" id="app_title">PortScaner</a>
+        <div class="my-nav container">
+            <p class="title text-center">Port Scaner</p>
         </div>
-        <div class="collapse navbar-collapse" id="scan-method">
-            <ul class="nav navbar-nav">
-                <li><a href="#" id="connect">TCP Connect</a></li>
-                <li><a href="#">TCP SYN</a></li>
-                <li><a href="#">ICMP Echo</a></li>
-            </ul>
+        <div class="action-bar-style container">
+            <div class="input-group-lg container" id="action-bar">
+                <div>
+                    <label for="host">目标IP:</label>
+                    <input type="text" placeholder="Host IP" id="host" class="form-control" v-model="ip">
+                </div>
+                <div>
+                    <label for="startPort">起始端口:</label>
+                    <input type="text" placeholder="StartPort" id="startPort" class="input-sm" v-model="start">
+                </div>
+                <div>
+                    <label for="endPort">结束端口:</label>
+                    <input type="text" placeholder="EndPort" id="endPort" class="form-control" v-model="end">
+                </div>
+                <div>
+                    <label for="method-select">扫描方式:</label>
+                    <select class="selector" id="method-select">
+                        <option is="my-option" v-for="(method, index) of methods" :key="index" :value="index" :method="method"></option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-success scanPort">扫描</button>
+            </div>
         </div>
+        <div class="container result-panel" id="result-view">
+            <div class="container left-panel">
+                <p class="text-center text-success font-style">开放端口</p>
+                <div class="table-style">
+                    <table-component :table-header="table_header" :result-set="openPortResultSet"></table-component>
+                </div>
+            </div>
+            <div class="container right-panel">
+                <button type="button" class="btn btn-info">导出结果</button>
+            </div>
+            <div class="container center-panel">
+                <p class="text-center text-danger font-style">关闭端口</p>
+                <div class="table-style">
+                    <table-component :table-header="table_header" :result-set="closePortResultSet"></table-component>
+                </div>
+            </div>
         </div>
-    </nav>
+        <script src="js/vue.js"></script>
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/jquery-eletron-adapter.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/test.js"></script>
+        <script src="js/component/action-bar.js"></script>
+        <script src="js/component/result-view.js"></script>
+        <script src="js/fix-size.js"></script>
+        <script src="js/scan/scan_port_api.js"></script>
     </body>
 </html>

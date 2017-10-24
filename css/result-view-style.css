@@ -1,0 +1,32 @@
+.result-panel {
+    width: 100%;
+}
+
+.result-panel div {
+    margin-top: 20px;
+}
+
+.left-panel {
+    float: left;
+    width: 40%;
+}
+
+.right-panel {
+    float: right;
+    width: 10%;
+}
+
+.center-panel {
+    float: left;
+    margin-left: 30px;
+    width: 40%;
+}
+
+.table-style {
+    overflow-y: scroll;
+}
+
+.font-style {
+    font-size: 30px;
+    font-family: cursive;
+}
