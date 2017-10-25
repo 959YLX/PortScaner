@@ -15,5 +15,12 @@ var action_bar = new Vue({
         start: '',
         end: '',
         methods: METHODS
+    },
+    methods: {
+        scan() {
+            startScan("127.0.0.1", 50, 100, SCAN_METHOD.SCAN_BY_TCP_CONNECT, (result) => {
+                console.log(result);
+            })
+        }
     }
 })

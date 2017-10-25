@@ -1,16 +1,19 @@
-var result;
+var ipcRenderer = require('electron').ipcRenderer
 
-function startScan(ips, ports, method, callback){
-    let res = scan.scan_port('127.0.0.1', 70, 90, 0)
-    console.log(res)
-    result = res
-    if (res.isNull()) {
-        console.log('res is null');
-    }
+const SCAN_METHOD = {
+    SCAN_BY_TCP_CONNECT: 0,
+    SCAN_BY_TCP_SYN: 1,
+    SCAN_BY_ICMP_ECHO: 2
 }
 
-var ffi = require('ffi')
-var scan = ffi.Library(`${__dirname}/lib/cmake-build-debug/libport_scan_shared.dylib`, {
-    'scan_port': ['pointer', ['string', 'int', 'int', 'int']],
-    'test_scan': ['pointer', ['string', 'int', 'int', 'int']]
-})
+function startScan(ip, start, end, method, callback){
+    loading.show_loading = true
+    ipcRenderer.on('finish_scan', (event, args) => {
+        if (args[0]) {
+            callback(args[1])
+        }else{
+            console.log("Scan Error");
+        }
+    })
+    ipcRenderer.send('start_scan', [ip, start, end, method])
+}

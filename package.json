@@ -2,6 +2,7 @@
     "name": "PortScaner",
     "version": "1.0.0",
     "main": "main.js",
+    "title": "PortScaner",
     "repository": {
         "type": "git",
         "url": "https://github.com/959YLX/PortScaner"
