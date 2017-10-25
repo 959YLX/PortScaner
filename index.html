@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="css/nav.css">
         <link rel="stylesheet" href="css/action-bar-style.css">
         <link rel="stylesheet" href="css/result-view-style.css">
+        <link rel="stylesheet" href="css/loading.css">
     </head>
     <body>
         <div class="my-nav container">
@@ -52,6 +53,9 @@
                 </div>
             </div>
         </div>
+        <div class="container" id="loading">
+            <loading-modal v-show="show_loading"></loading-modal>
+        </div>
         <script src="js/vue.js"></script>
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/jquery-eletron-adapter.js"></script>
@@ -60,5 +64,6 @@
         <script src="js/component/result-view.js"></script>
         <script src="js/fix-size.js"></script>
         <script src="js/scan/scan_port_api.js"></script>
+        <script src="js/component/loading.js"></script>
     </body>
 </html>

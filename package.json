@@ -1,5 +1,14 @@
 {
     "name": "PortScaner",
     "version": "1.0.0",
-    "main": "main.js"
+    "main": "main.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/959YLX/PortScaner"
+    },
+    "licenses" : [
+        {
+            "license" : "GPL-3.0"
+        }
+    ]
 }

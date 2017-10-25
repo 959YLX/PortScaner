@@ -31,4 +31,13 @@ bool* scan_port(char* ip, int start_port, int end_port, int scan_method)
     return port_status;
 }
 
+uint8_t* test_scan(char* ip, int start_port, int end_port, int scan_method)
+{
+    bool* result = scan_port(ip, start_port, end_port, scan_method);
+    for (int i = 0; i <= end_port - start_port; ++i) {
+        printf("%d\n",result[i]);
+    }
+    return (uint8_t*)result;
+}
+
 

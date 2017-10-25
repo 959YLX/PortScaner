@@ -17,4 +17,6 @@
 
 bool* scan_port(char* ip, int start_port, int end_port, int scan_method);
 
+uint8_t* test_scan(char* ip, int start_port, int end_port, int scan_method);
+
 #endif
