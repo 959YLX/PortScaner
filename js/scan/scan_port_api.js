@@ -10,7 +10,7 @@ function startScan(ip, start, end, method, callback){
     loading.show_loading = true
     ipcRenderer.on('finish_scan', (event, args) => {
         if (args[0]) {
-            callback(args[1])
+            callback(start, args[1])
         }else{
             console.log("Scan Error");
         }

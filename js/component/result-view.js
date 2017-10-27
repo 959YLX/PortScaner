@@ -1,3 +1,5 @@
+const FILE_PATH = 'scan_result.csv'
+
 Vue.component('table-header', {
     template: '\
         <tr>\
@@ -41,12 +43,62 @@ var result_view = new Vue({
     el: '#result-view',
     data: {
         table_header: ['编号', '端口号'],
-        openPortResultSet: [
-            [1, 80],
-            [2, 22]
-        ],
-        closePortResultSet: [
-            [1, 90]
-        ]
+        openPortResultSet: [],
+        closePortResultSet: []
+    },
+    methods: {
+        setScanResult(start_port, openPort, closePort) {
+            let openPortResult = []
+            let closePortResult = []
+            openPort.forEach((val, index) => {
+                openPortResult.push([index + 1, val + start_port])
+            })
+            closePort.forEach((val, index) => {
+                closePortResult.push([index + 1, val + start_port])
+            })
+            this.openPortResultSet = openPortResult
+            this.closePortResultSet = closePortResult
+        },
+        exportResult() {
+            if (this.openPortResultSet.length != 0 && this.closePortResultSet.length != 0) {
+                ipcRenderer.once('save_finish', (event, args) => {
+                    if (args) {
+                        console.log("Error");
+                    }else {
+                        console.log("Success");
+                    }
+                })
+                ipcRenderer.send('save', [FILE_PATH, createCSVContain(this.openPortResultSet, this.closePortResultSet)])
+            }
+        }
+    },
+    computed: {
+        openPortNumber() {
+            return this.openPortResultSet.length
+        },
+        closePortNumber() {
+            return this.closePortResultSet.length
+        }
     }
 })
+
+function createCSVContain(openPort, closePort) {
+    let result = "开放端口,关闭端口\n"
+    let index = 0
+    let open
+    let close
+    let left
+    let right
+    while (true) {
+        open = openPort[index]
+        close = closePort[index]
+        if (open == null && close == null) {
+            break
+        }
+        left = open == null ? "" : open[1]
+        right = close == null ? "" : close[1]
+        result = result.concat(`${left},${right}\n`)
+        index++
+    }
+    return result
+}

@@ -30,7 +30,7 @@
                 <div>
                     <label for="method-select">扫描方式:</label>
                     <select class="selector" id="method-select">
-                        <option is="my-option" v-for="(method, index) of methods" :key="index" :value="index" :method="method"></option>
+                        <option is="my-option" v-for="(method, index) of methods" :key="index" :index="index" :method="method"></option>
                     </select>
                 </div>
                 <button type="button" class="btn btn-success scanPort" @click="scan">扫描</button>
@@ -38,16 +38,16 @@
         </div>
         <div class="container result-panel" id="result-view">
             <div class="container left-panel">
-                <p class="text-center text-success font-style">开放端口</p>
+                <p class="text-center text-success font-style">开放端口({{openPortNumber}}个)</p>
                 <div class="table-style">
                     <table-component :table-header="table_header" :result-set="openPortResultSet"></table-component>
                 </div>
             </div>
             <div class="container right-panel">
-                <button type="button" class="btn btn-info">导出结果</button>
+                <button type="button" class="btn btn-info" @click="exportResult">导出结果</button>
             </div>
             <div class="container center-panel">
-                <p class="text-center text-danger font-style">关闭端口</p>
+                <p class="text-center text-danger font-style">关闭端口({{closePortNumber}}个)</p>
                 <div class="table-style">
                     <table-component :table-header="table_header" :result-set="closePortResultSet"></table-component>
                 </div>

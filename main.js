@@ -1,5 +1,6 @@
 const {app, BrowserWindow} = require('electron')
 const ipcMain = require('electron').ipcMain
+const fs = require('fs')
 
 let mainWindow = null
 let workingProcess = null
@@ -36,6 +37,14 @@ ipcMain.on('start_scan', (event, args) => {
 
 ipcMain.on('finish_scan', (event, args) => {
     mainWindow.webContents.send('finish_scan', args)
+})
+
+ipcMain.on('save', (event, args) => {
+    let file_path = args[0]
+    let file_contain = args[1]
+    fs.writeFile(file_path, file_contain, (error) => {
+        event.sender.send('save_finish', error)
+    })
 })
 
 app.on('ready', () => {
