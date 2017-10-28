@@ -42,22 +42,23 @@ Vue.component('table-component', {
 var result_view = new Vue({
     el: '#result-view',
     data: {
-        table_header: ['编号', '端口号'],
+        table_header: ['IP地址', '端口号'],
         openPortResultSet: [],
         closePortResultSet: []
     },
     methods: {
-        setScanResult(start_port, openPort, closePort) {
-            let openPortResult = []
-            let closePortResult = []
-            openPort.forEach((val, index) => {
-                openPortResult.push([index + 1, val + start_port])
+        setScanResult(ip, start_port, openPort, closePort) {
+            console.log("ip = " + ip);
+            openPort.forEach((val) => {
+                this.openPortResultSet.push([ip, val + start_port])
             })
-            closePort.forEach((val, index) => {
-                closePortResult.push([index + 1, val + start_port])
+            closePort.forEach((val) => {
+                this.closePortResultSet.push([ip, val + start_port])
             })
-            this.openPortResultSet = openPortResult
-            this.closePortResultSet = closePortResult
+        },
+        startNewScan() {
+            this.openPortResultSet = []
+            this.closePortResultSet = []
         },
         exportResult() {
             if (this.openPortResultSet.length != 0 && this.closePortResultSet.length != 0) {

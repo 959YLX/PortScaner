@@ -7,8 +7,8 @@ const SCAN_METHOD = {
 }
 
 function startScan(ip, start, end, method, callback){
-    loading.show_loading = true
-    ipcRenderer.on('finish_scan', (event, args) => {
+    ipcRenderer.once('finish_scan', (event, args) => {
+        console.log("finish" + args);
         if (args[0]) {
             callback(start, args[1])
         }else{

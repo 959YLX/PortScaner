@@ -14,10 +14,6 @@ bool* scan_port(char* ip, int start_port, int end_port, int scan_method)
             scan_function = &scan_syn;
             break;
         }
-        case ICMP_ECHO: {
-            scan_function = &scan_icmp;
-            break;
-        }
         default: {
             perror(ERROR_MESSAGE);
             return port_status;
@@ -31,13 +27,9 @@ bool* scan_port(char* ip, int start_port, int end_port, int scan_method)
     return port_status;
 }
 
-uint8_t* test_scan(char* ip, int start_port, int end_port, int scan_method)
+bool* scan_ip(int start_ip, int end_ip)
 {
-    bool* result = scan_port(ip, start_port, end_port, scan_method);
-    for (int i = 0; i <= end_port - start_port; ++i) {
-        printf("%d\n",result[i]);
-    }
-    return (uint8_t*)result;
+
 }
 
 

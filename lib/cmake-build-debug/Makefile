@@ -136,36 +136,6 @@ port_scan_shared/fast:
 	$(MAKE) -f CMakeFiles/port_scan_shared.dir/build.make CMakeFiles/port_scan_shared.dir/build
 .PHONY : port_scan_shared/fast
 
-scan_mthods/icmp_echo.o: scan_mthods/icmp_echo.c.o
-
-.PHONY : scan_mthods/icmp_echo.o
-
-# target to build an object file
-scan_mthods/icmp_echo.c.o:
-	$(MAKE) -f CMakeFiles/port_scan_static.dir/build.make CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.o
-	$(MAKE) -f CMakeFiles/port_scan_shared.dir/build.make CMakeFiles/port_scan_shared.dir/scan_mthods/icmp_echo.c.o
-.PHONY : scan_mthods/icmp_echo.c.o
-
-scan_mthods/icmp_echo.i: scan_mthods/icmp_echo.c.i
-
-.PHONY : scan_mthods/icmp_echo.i
-
-# target to preprocess a source file
-scan_mthods/icmp_echo.c.i:
-	$(MAKE) -f CMakeFiles/port_scan_static.dir/build.make CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.i
-	$(MAKE) -f CMakeFiles/port_scan_shared.dir/build.make CMakeFiles/port_scan_shared.dir/scan_mthods/icmp_echo.c.i
-.PHONY : scan_mthods/icmp_echo.c.i
-
-scan_mthods/icmp_echo.s: scan_mthods/icmp_echo.c.s
-
-.PHONY : scan_mthods/icmp_echo.s
-
-# target to generate assembly for a file
-scan_mthods/icmp_echo.c.s:
-	$(MAKE) -f CMakeFiles/port_scan_static.dir/build.make CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.s
-	$(MAKE) -f CMakeFiles/port_scan_shared.dir/build.make CMakeFiles/port_scan_shared.dir/scan_mthods/icmp_echo.c.s
-.PHONY : scan_mthods/icmp_echo.c.s
-
 scan_mthods/tcp_connect.o: scan_mthods/tcp_connect.c.o
 
 .PHONY : scan_mthods/tcp_connect.o
@@ -266,9 +236,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... port_scan_static"
 	@echo "... port_scan_shared"
-	@echo "... scan_mthods/icmp_echo.o"
-	@echo "... scan_mthods/icmp_echo.i"
-	@echo "... scan_mthods/icmp_echo.s"
 	@echo "... scan_mthods/tcp_connect.o"
 	@echo "... scan_mthods/tcp_connect.i"
 	@echo "... scan_mthods/tcp_connect.s"

@@ -9,10 +9,10 @@ const indexPage = 'index.html'
 const workingIndex = 'working.html'
 
 const windowSizeConfig = {
-    minWidth: 1100,
-    minHeight: 800,
-    width: 1100,
-    height: 800
+    minWidth: 1200,
+    minHeight: 900,
+    width: 1200,
+    height: 900
 }
 
 function createWorkingProcess() {

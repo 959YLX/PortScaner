@@ -129,36 +129,11 @@ CMakeFiles/port_scan_static.dir/scan_mthods/tcp_syn.c.o.provides: CMakeFiles/por
 CMakeFiles/port_scan_static.dir/scan_mthods/tcp_syn.c.o.provides.build: CMakeFiles/port_scan_static.dir/scan_mthods/tcp_syn.c.o
 
 
-CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.o: CMakeFiles/port_scan_static.dir/flags.make
-CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.o: ../scan_mthods/icmp_echo.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ylx/Documents/Program/Project/PortScaner/lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.o   -c /Users/ylx/Documents/Program/Project/PortScaner/lib/scan_mthods/icmp_echo.c
-
-CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/ylx/Documents/Program/Project/PortScaner/lib/scan_mthods/icmp_echo.c > CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.i
-
-CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/ylx/Documents/Program/Project/PortScaner/lib/scan_mthods/icmp_echo.c -o CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.s
-
-CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.o.requires:
-
-.PHONY : CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.o.requires
-
-CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.o.provides: CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.o.requires
-	$(MAKE) -f CMakeFiles/port_scan_static.dir/build.make CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.o.provides.build
-.PHONY : CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.o.provides
-
-CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.o.provides.build: CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.o
-
-
 # Object files for target port_scan_static
 port_scan_static_OBJECTS = \
 "CMakeFiles/port_scan_static.dir/scaner.c.o" \
 "CMakeFiles/port_scan_static.dir/scan_mthods/tcp_connect.c.o" \
-"CMakeFiles/port_scan_static.dir/scan_mthods/tcp_syn.c.o" \
-"CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.o"
+"CMakeFiles/port_scan_static.dir/scan_mthods/tcp_syn.c.o"
 
 # External object files for target port_scan_static
 port_scan_static_EXTERNAL_OBJECTS =
@@ -166,10 +141,9 @@ port_scan_static_EXTERNAL_OBJECTS =
 libport_scan_static.a: CMakeFiles/port_scan_static.dir/scaner.c.o
 libport_scan_static.a: CMakeFiles/port_scan_static.dir/scan_mthods/tcp_connect.c.o
 libport_scan_static.a: CMakeFiles/port_scan_static.dir/scan_mthods/tcp_syn.c.o
-libport_scan_static.a: CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.o
 libport_scan_static.a: CMakeFiles/port_scan_static.dir/build.make
 libport_scan_static.a: CMakeFiles/port_scan_static.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/ylx/Documents/Program/Project/PortScaner/lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C static library libport_scan_static.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/ylx/Documents/Program/Project/PortScaner/lib/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C static library libport_scan_static.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/port_scan_static.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/port_scan_static.dir/link.txt --verbose=$(VERBOSE)
 
@@ -181,7 +155,6 @@ CMakeFiles/port_scan_static.dir/build: libport_scan_static.a
 CMakeFiles/port_scan_static.dir/requires: CMakeFiles/port_scan_static.dir/scaner.c.o.requires
 CMakeFiles/port_scan_static.dir/requires: CMakeFiles/port_scan_static.dir/scan_mthods/tcp_connect.c.o.requires
 CMakeFiles/port_scan_static.dir/requires: CMakeFiles/port_scan_static.dir/scan_mthods/tcp_syn.c.o.requires
-CMakeFiles/port_scan_static.dir/requires: CMakeFiles/port_scan_static.dir/scan_mthods/icmp_echo.c.o.requires
 
 .PHONY : CMakeFiles/port_scan_static.dir/requires
 

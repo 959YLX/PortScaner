@@ -13,6 +13,7 @@ bool scan_connect(char *ip, int port)
     scan_address.sin_family = AF_INET;
     scan_address.sin_addr.s_addr = inet_addr(ip);
     scan_address.sin_port = htons(port);
+    //TODO 处理超时问题
     if (connect(connect_fd, (struct sockaddr *)&scan_address, sizeof(scan_address)) == 0) {
         result = true;
         close(connect_fd);

@@ -2,6 +2,7 @@ const METHODS = ['TCP-Connect', 'TCP-SYN', 'ICMP-Echo']
 const MIN_PORT = 0
 const MAX_PORT = 65535
 const IP_PATTERN = /^((25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))$/
+const AND_IP_NUMBER = 255
 
 Vue.component('my-option', {
     template: '\
@@ -19,24 +20,63 @@ var action_bar = new Vue({
     },
     methods: {
         scan() {
-            let scan_ip = this.ip
+            let scan_ip = this.ip.split('-')
             let start_port = parseInt(this.start)
             let end_port = parseInt(this.end)
             let method = parseInt($('#method-select')[0].value)
-            if (isNaN(start_port) || isNaN(end_port) || (!(start_port >= 0 && start_port <= end_port && end_port < 65536))) {
-                //PORT Error
+            if (scan_ip.length > 2 || isNaN(start_port) || isNaN(end_port) || (!(start_port >= 0 && start_port <= end_port && end_port < 65536))) {
                 console.log("Port Error");
                 return
             }
-            if (scan_ip.search(IP_PATTERN) != 0) {
-                //IP Error
+            scan_ip = scan_ip.map((ip) => { return ip.trim() })
+            if (!scan_ip.every((ip) => { return ip.search(IP_PATTERN) === 0 })) {
                 console.log("IP Error");
                 return
             }
-            startScan(scan_ip, parseInt(this.start), parseInt(this.end), method, (start, result) => {
-                result_view.setScanResult(start, result[0], result[1])
-                loading.show_loading = false
-            })
+
+            let start_scan_number = translateIpToNumber(scan_ip[0])
+            let end_scan_number = scan_ip[1] == null ? start_scan_number : translateIpToNumber(scan_ip[1])
+
+            loading.show_loading = true
+            result_view.startNewScan()
+
+            for (let i = start_scan_number; i <= end_scan_number; i++) {
+                let temp_ip = translateNumberToIp(i)
+                let close = (i === end_scan_number)
+                console.log("temp ip = " + temp_ip);
+                startScan(temp_ip, start_port, end_port, method, (start, result) => {
+                    result_view.setScanResult(temp_ip, start, result[0], result[1])
+                    if (close) {
+                        loading.show_loading = false
+                    }
+                })
+            }
+
+            // scan_ip.forEach((ip) => {
+            //     startScan(ip, parseInt(this.start), parseInt(this.end), method, (start, result) => {
+            //         result_view.setScanResult(ip, start, result[0], result[1])
+            //         loading.show_loading = false
+            //     })
+            // })
         }
     }
 })
+
+function translateIpToNumber(ip) {
+    let parttern = ip.split('.');
+    let ip_num = 0
+    parttern.forEach((value, index) => {
+        ip_num += (parseInt(value) << ((3 - index) * 8))
+    })
+    return ip_num
+}
+
+function translateNumberToIp(number) {
+    let ip = ''
+    let temp
+    for (let i = 0; i < 4; i++) {
+        temp = (number & (AND_IP_NUMBER << ((3 - i) * 8))) >>> ((3 - i) * 8)
+        ip = ip.concat(`${temp}.`)
+    }
+    return ip.substr(0, ip.length - 1)
+}
