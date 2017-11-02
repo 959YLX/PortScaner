@@ -6,15 +6,33 @@
 
 #IncludeRegexTransform: 
 
-/Users/ylx/Documents/Program/Project/PortScaner/lib/scan_mthods/icmp_echo.c
-icmp_echo.h
-/Users/ylx/Documents/Program/Project/PortScaner/lib/scan_mthods/icmp_echo.h
-
 /Users/ylx/Documents/Program/Project/PortScaner/lib/scan_mthods/icmp_echo.h
 stdbool.h
 -
+sys/socket.h
+-
+netinet/in.h
+-
+stdlib.h
+-
+memory.h
+-
+netinet/ip.h
+-
+netinet/ip_icmp.h
+-
+unistd.h
+-
+sys/time.h
+-
+stdio.h
+-
+errno.h
+-
 
 /Users/ylx/Documents/Program/Project/PortScaner/lib/scan_mthods/tcp_connect.c
+fcntl.h
+-
 tcp_connect.h
 /Users/ylx/Documents/Program/Project/PortScaner/lib/scan_mthods/tcp_connect.h
 
@@ -32,6 +50,10 @@ netinet/in.h
 memory.h
 -
 unistd.h
+-
+sys/select.h
+-
+errno.h
 -
 
 /Users/ylx/Documents/Program/Project/PortScaner/lib/scan_mthods/tcp_syn.c
@@ -54,6 +76,14 @@ netinet/tcp.h
 memory.h
 -
 unistd.h
+-
+stdlib.h
+-
+netinet/ip.h
+-
+stdio.h
+-
+netinet/if_ether.h
 -
 
 /Users/ylx/Documents/Program/Project/PortScaner/lib/scaner.c

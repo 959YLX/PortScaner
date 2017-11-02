@@ -16,9 +16,10 @@ const windowSizeConfig = {
 }
 
 function createWorkingProcess() {
-    workingProcess = new BrowserWindow({
-        show: false
-    })
+    // workingProcess = new BrowserWindow({
+    //     show: false
+    // })
+    workingProcess = new BrowserWindow(windowSizeConfig)
     workingProcess.loadURL(`file://${__dirname}/${workingIndex}`)
 }
 
@@ -36,7 +37,9 @@ ipcMain.on('start_scan', (event, args) => {
 })
 
 ipcMain.on('finish_scan', (event, args) => {
-    mainWindow.webContents.send('finish_scan', args)
+    console.log("main " + args[0]);
+    // mainWindow.webContents.send('finish_scan', args)
+    mainWindow.webContents.send(args[1][0], args)
 })
 
 ipcMain.on('save', (event, args) => {

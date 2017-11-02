@@ -40,17 +40,24 @@ var action_bar = new Vue({
             loading.show_loading = true
             result_view.startNewScan()
 
-            for (let i = start_scan_number; i <= end_scan_number; i++) {
-                let temp_ip = translateNumberToIp(i)
-                let close = (i === end_scan_number)
-                console.log("temp ip = " + temp_ip);
-                startScan(temp_ip, start_port, end_port, method, (start, result) => {
-                    result_view.setScanResult(temp_ip, start, result[0], result[1])
-                    if (close) {
-                        loading.show_loading = false
-                    }
+            if (method != 3) {
+                for (let i = start_scan_number; i <= end_scan_number; i++) {
+                    let temp_ip = translateNumberToIp(i)
+                    let close = (i === end_scan_number)
+                    console.log("temp ip = " + temp_ip);
+                    startScan(temp_ip, start_port, end_port, method, (start, result) => {
+                        result_view.setScanResult(result[0], start, result[1], result[2])
+                        if (close) {
+                            loading.show_loading = false
+                        }
+                    })
+                }
+            } else {
+                startScan(translateNumberToIp(start_scan_number), start_scan_number, end_scan_number, method, (start, result) => {
+                    result_view.setScanResult()
                 })
             }
+
 
             // scan_ip.forEach((ip) => {
             //     startScan(ip, parseInt(this.start), parseInt(this.end), method, (start, result) => {

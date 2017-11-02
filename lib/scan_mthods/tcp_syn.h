@@ -13,6 +13,19 @@
 #include <netinet/tcp.h>
 #include <memory.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <netinet/ip.h>
+#include <stdio.h>
+#include <netinet/if_ether.h>
+
+typedef struct __PSD_HEADER {
+    unsigned long saddr; //源地址
+    unsigned long daddr; //目的地址
+    char mbz;//置空
+    char ptcl; //协议类型
+    unsigned short tcpl; //TCP长度
+} psd_header;
+
 
 bool scan_syn(char *, int);
 

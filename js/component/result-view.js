@@ -56,13 +56,16 @@ var result_view = new Vue({
                 this.closePortResultSet.push([ip, val + start_port])
             })
         },
+        setIpScanRestlt() {
+            
+        },
         startNewScan() {
             this.openPortResultSet = []
             this.closePortResultSet = []
         },
         exportResult() {
             if (this.openPortResultSet.length != 0 && this.closePortResultSet.length != 0) {
-                ipcRenderer.once('save_finish', (event, args) => {
+                ipcRenderer.on('save_finish', (event, args) => {
                     if (args) {
                         console.log("Error");
                     }else {

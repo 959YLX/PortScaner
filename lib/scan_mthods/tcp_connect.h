@@ -12,6 +12,8 @@
 #include <netinet/in.h>
 #include <memory.h>
 #include <unistd.h>
+#include <sys/select.h>
+#include <errno.h>
 
 bool scan_connect(char *, int);
 

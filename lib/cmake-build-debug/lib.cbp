@@ -122,6 +122,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/ylx/Documents/Program/Project/PortScaner/lib/scan_mthods/icmp_echo.c">
+			<Option target="port_scan_shared"/>
+		</Unit>
+		<Unit filename="/Users/ylx/Documents/Program/Project/PortScaner/lib/scan_mthods/icmp_echo.h">
+			<Option target="port_scan_shared"/>
+		</Unit>
 		<Unit filename="/Users/ylx/Documents/Program/Project/PortScaner/lib/scan_mthods/tcp_connect.c">
 			<Option target="port_scan_static"/>
 			<Option target="port_scan_shared"/>
