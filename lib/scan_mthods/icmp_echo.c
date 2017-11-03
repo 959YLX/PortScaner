@@ -43,6 +43,7 @@ bool* scan_ip_by_icmp(u_int32_t start, u_int32_t end) {
             result[ip - start] = true;
         }
     }
+    printf("end scan, print by c\n");
     return result;
 }
 

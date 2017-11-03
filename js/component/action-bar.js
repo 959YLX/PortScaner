@@ -24,7 +24,7 @@ var action_bar = new Vue({
             let start_port = parseInt(this.start)
             let end_port = parseInt(this.end)
             let method = parseInt($('#method-select')[0].value)
-            if (scan_ip.length > 2 || isNaN(start_port) || isNaN(end_port) || (!(start_port >= 0 && start_port <= end_port && end_port < 65536))) {
+            if (scan_ip.length > 2 || (method != 2 && (isNaN(start_port) || isNaN(end_port) || (!(start_port >= 0 && start_port <= end_port && end_port < 65536))))) {
                 console.log("Port Error");
                 return
             }
@@ -40,11 +40,10 @@ var action_bar = new Vue({
             loading.show_loading = true
             result_view.startNewScan()
 
-            if (method != 3) {
+            if (method != 2) {
                 for (let i = start_scan_number; i <= end_scan_number; i++) {
                     let temp_ip = translateNumberToIp(i)
                     let close = (i === end_scan_number)
-                    console.log("temp ip = " + temp_ip);
                     startScan(temp_ip, start_port, end_port, method, (start, result) => {
                         result_view.setScanResult(result[0], start, result[1], result[2])
                         if (close) {
@@ -54,17 +53,10 @@ var action_bar = new Vue({
                 }
             } else {
                 startScan(translateNumberToIp(start_scan_number), start_scan_number, end_scan_number, method, (start, result) => {
-                    result_view.setScanResult()
+                    result_view.setIpScanRestlt(start, result[1], result[2])
+                    loading.show_loading = false
                 })
             }
-
-
-            // scan_ip.forEach((ip) => {
-            //     startScan(ip, parseInt(this.start), parseInt(this.end), method, (start, result) => {
-            //         result_view.setScanResult(ip, start, result[0], result[1])
-            //         loading.show_loading = false
-            //     })
-            // })
         }
     }
 })

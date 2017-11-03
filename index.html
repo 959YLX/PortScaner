@@ -38,18 +38,18 @@
         </div>
         <div class="container result-panel" id="result-view">
             <div class="container left-panel">
-                <p class="text-center text-success font-style">开放端口({{openPortNumber}}个)</p>
+                <p class="text-center text-success font-style">{{open}}</p>
                 <div class="table-style">
-                    <table-component :table-header="table_header" :result-set="openPortResultSet"></table-component>
+                    <table-component :table-header="table_header" :result-set="openResultSet"></table-component>
                 </div>
             </div>
             <div class="container right-panel">
                 <button type="button" class="btn btn-info" @click="exportResult">导出结果</button>
             </div>
             <div class="container center-panel">
-                <p class="text-center text-danger font-style">关闭端口({{closePortNumber}}个)</p>
+                <p class="text-center text-danger font-style">{{close}}</p>
                 <div class="table-style">
-                    <table-component :table-header="table_header" :result-set="closePortResultSet"></table-component>
+                    <table-component :table-header="table_header" :result-set="closeResultSet"></table-component>
                 </div>
             </div>
         </div>

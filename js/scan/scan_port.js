@@ -32,7 +32,6 @@ ipcRenderer.on('start_scan', (event, args) => {
                 openArray.push(index)
             }
         })
-        console.log(`scan ip finish: ${ip}`);
         ipcRenderer.send('finish_scan', [true, [ip, openArray, closeArray]])
     }else {
         ipcRenderer.send('finish_scan', [false, null])
