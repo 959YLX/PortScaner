@@ -17,8 +17,10 @@ ipcRenderer.on('start_scan', (event, args) => {
     let start = args[1]
     let end = args[2]
     let scan_result
+    if (start < 0) {
+        return
+    }
     if (args[3] === 2) {
-        console.log("ip scan");
         scan_result = scan_port_c_api.scan_ip(start, end)
     }else {
         scan_result = scan_port_c_api.scan_port(ip, start, end, args[3])
@@ -32,7 +34,7 @@ ipcRenderer.on('start_scan', (event, args) => {
                 openArray.push(index)
             }
         })
-        ipcRenderer.send('finish_scan', [true, [ip, openArray, closeArray]])
+        ipcRenderer.send('finish_scan', [true, [ip, openArray, closeArray, start]])
     }else {
         ipcRenderer.send('finish_scan', [false, null])
     }

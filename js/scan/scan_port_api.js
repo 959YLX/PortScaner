@@ -16,3 +16,15 @@ function startScan(ip, start, end, method, callback){
     })
     ipcRenderer.send('start_scan', [ip, start, end, method])
 }
+
+function multiProcessScan(ipList, task, callback) {
+    ipList.forEach((value) => {
+        ipcRenderer.on(value, (event, args) => {
+            if (args[0]) {
+                callback(args[1])
+            }else {
+                console.log("ERROR")
+            }
+        })
+    })
+}

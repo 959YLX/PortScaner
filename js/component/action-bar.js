@@ -4,6 +4,8 @@ const MAX_PORT = 65535
 const IP_PATTERN = /^((25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))$/
 const AND_IP_NUMBER = 255
 
+const WORKING_PROCESS_COUNT = 4
+
 Vue.component('my-option', {
     template: '\
     <option :value="index">{{method}}</option>',
@@ -78,4 +80,60 @@ function translateNumberToIp(number) {
         ip = ip.concat(`${temp}.`)
     }
     return ip.substr(0, ip.length - 1)
+}
+
+function createScanTask(startIp, endIp, startPort, endPort, scanMethod) {
+    let args = []
+    if (scanMethod != 2) {
+        let total_ip = endIp - startIp + 1
+        let ground = parseInt(total_ip / WORKING_PROCESS_COUNT)
+        let curren_ip = startIp
+        for (let i = 0; i < ground; i++) {
+            let ground_task = []
+            for (let j = 0; j < WORKING_PROCESS_COUNT; j++) {
+                ground_task[j] = [translateNumberToIp(curren_ip), startPort, endPort, scanMethod]
+                curren_ip += 1
+            }
+            args.push(ground_task)
+        }
+        let remain_ip = endIp - curren_ip + 1
+        if (remain_ip != 0) {
+            if (remain_ip > (WORKING_PROCESS_COUNT / 2)) {
+                let destination = remain_ip - parseInt((WORKING_PROCESS_COUNT / 2))
+                args.push(calculateTask(startPort, endPort, curren_ip, destination, startIp, endIp, scanMethod))
+                curren_ip += destination
+                remain_ip -= destination
+            }
+            args.push(calculateTask(startPort, endPort, curren_ip, remain_ip, startIp, endIp, scanMethod))
+        }
+    } else {
+        //IP扫描
+        let count = parseInt((endIp - startIp + 1) / WORKING_PROCESS_COUNT) + 1
+        for (let i = 0; i < WORKING_PROCESS_COUNT; i++) {
+            let start = (i * count) + startIp
+            start = start > endIp ? -1 : start
+            let end = start + count - 1
+            end = end > endIp ? endIp : end
+            let task = [translateNumberToIp(start), start, end, scanMethod]
+            args[i] = task
+        }
+    }
+    return args
+}
+
+function calculateTask(startPort, endPort, curren_ip, remain_ip, startIp, endIp, scanMethod) {
+    let count = parseInt((remain_ip * (endPort - startPort + 1)) / WORKING_PROCESS_COUNT)
+    let task = []
+    for (let i = 0; i < remain_ip; i++) {
+        let remain_groung = parseInt(WORKING_PROCESS_COUNT / remain_ip)
+        for (let j = 0; j < remain_groung; j++) {
+            let start = startPort + (j * count)
+            if (j != remain_groung - 1){
+                task.push([translateNumberToIp(curren_ip + i), start, start + count - 1, scanMethod])
+            } else {
+                task.push([translateNumberToIp(curren_ip + i), start, endPort, scanMethod])
+            }
+        }
+    }
+    return task
 }
