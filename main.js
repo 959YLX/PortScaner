@@ -22,10 +22,10 @@ const windowSizeConfig = {
 function createWorkingProcesses() {
     workingProcesses = []
     for (let i = 0; i < WORKING_PROCESS_COUNT; i++) {
-        // let wp = new BrowserWindow({show: false})
-        let wp = new BrowserWindow(windowSizeConfig)
+        let wp = new BrowserWindow({show: false})
+        // let wp = new BrowserWindow(windowSizeConfig)
         wp.loadURL(`file://${__dirname}/${workingIndex}`)
-        wp.openDevTools()
+        // wp.openDevTools()
         workingProcesses.push(wp)
     }
 }

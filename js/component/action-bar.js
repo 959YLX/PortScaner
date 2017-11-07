@@ -40,7 +40,15 @@ var action_bar = new Vue({
             let end_scan_number = scan_ip[1] == null ? start_scan_number : translateIpToNumber(scan_ip[1])
 
             loading.show_loading = true
-            result_view.startNewScan()
+
+            let total = 0
+            if (method != 2) {
+                total = (end_scan_number - start_scan_number + 1) * (end_port - start_port + 1)
+            }else {
+                total = end_scan_number - start_scan_number + 1
+            }
+
+            result_view.startNewScan(total)
 
             let taskList = createScanTask(start_scan_number, end_scan_number, start_port, end_port, method);
             removeListener()
@@ -57,9 +65,9 @@ var action_bar = new Vue({
                     }else{
                         result_view.setIpScanRestlt(result[1], result[2], result[3])
                     }
-                    if (index === taskList.length - 1) {
-                        loading.show_loading = false
-                    }
+                    // if (index === taskList.length - 1) {
+                    //     loading.show_loading = false
+                    // }
                 })
             })
             // }
