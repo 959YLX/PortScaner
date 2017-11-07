@@ -1,4 +1,6 @@
-var ipcRenderer = require('electron').ipcRenderer
+let ipcRenderer = require('electron').ipcRenderer
+
+let currentListener = []
 
 const SCAN_METHOD = {
     SCAN_BY_TCP_CONNECT: 0,
@@ -6,15 +8,22 @@ const SCAN_METHOD = {
     SCAN_BY_ICMP_ECHO: 2
 }
 
-function startScan(ip, start, end, method, callback){
-    ipcRenderer.once(ip, (event, args) => {
-        if (args[0]) {
-            callback(start, args[1])
-        }else{
-            console.log("Scan Error");
-        }
+// function startScan(ip, start, end, method, callback){
+//     ipcRenderer.once(ip, (event, args) => {
+//         if (args[0]) {
+//             callback(start, args[1])
+//         }else{
+//             console.log("Scan Error");
+//         }
+//     })
+//     ipcRenderer.send('start_scan', [ip, start, end, method])
+// }
+
+function removeListener() {
+    currentListener.forEach((value) => {
+        ipcRenderer.removeAllListeners(value)
     })
-    ipcRenderer.send('start_scan', [ip, start, end, method])
+    currentListener = []
 }
 
 function multiProcessScan(ipList, task, callback) {
@@ -26,5 +35,8 @@ function multiProcessScan(ipList, task, callback) {
                 console.log("ERROR")
             }
         })
+        currentListener.push(value)
     })
+    console.log(ipcRenderer);
+    ipcRenderer.send('start_scan', task)
 }

@@ -4,6 +4,21 @@
 
 #include "icmp_echo.h"
 
+
+typedef struct __IP_HEADER {
+    uint8_t version;
+    uint8_t service_filed;
+    uint16_t length;
+    uint16_t identification;
+    uint8_t flat;
+    uint8_t offset;
+    uint8_t ttl;
+    uint8_t protocol;
+    uint16_t checksum;
+    uint32_t source;
+    uint32_t destination;
+}header;
+
 u_int16_t icmp_checksum(struct icmp *);
 
 bool* scan_ip_by_icmp(u_int32_t start, u_int32_t end) {
@@ -35,15 +50,32 @@ bool* scan_ip_by_icmp(u_int32_t start, u_int32_t end) {
     ssize_t destination_size = sizeof(struct sockaddr_in);
     memset(&destination, 0, destination_size);
     for (u_int32_t ip = start; ip <= end; ++ip) {
-        printf("scan ip = %d\n", ip);
         destination.sin_addr.s_addr = htonl(ip);
-        sendto(sock_fd, ICMP_Package, ICMP_PACKAGE_SIZE, MSG_WAITALL, (const struct sockaddr *) &destination, destination_size);
-        if (recvfrom(sock_fd, receive_buffer, ICMP_RECEIVE_SIZE, 0, (struct sockaddr *) &destination,
+        sendto(sock_fd, ICMP_Package, ICMP_PACKAGE_SIZE, 0, (const struct sockaddr *) &destination,
+               (socklen_t) destination_size);
+        memset(receive_buffer, 0, ICMP_RECEIVE_SIZE);
+        if (recvfrom(sock_fd, receive_buffer, ICMP_RECEIVE_SIZE, MSG_WAITALL, (struct sockaddr *) &destination,
                      (socklen_t *) &destination_size) > 0) {
-            result[ip - start] = true;
+//            printf("receive from %d PID = %d socket = %d\n", ip, getpid(), sock_fd);
+//            printf("------------START------------\n");
+//            for (int i = 0; i < ICMP_RECEIVE_SIZE; ++i) {
+//                printf("%x\t", receive_buffer[i]);
+//            }
+//            printf("------------END------------\n");
+//
+            header *ip_header = (header *) receive_buffer;
+            if (htonl(ip_header->source) == ip) {
+                result[ip - start] = true;
+            }
+//            printf("------------START------------\n");
+//            printf("source = %d\n", htonl(ip_header->source));
+//            printf("destination = %d\n", ip_header->destination);
+//            printf("------------END------------\n");
+
+
         }
     }
-    printf("end scan, print by c\n");
+    close(sock_fd);
     return result;
 }
 

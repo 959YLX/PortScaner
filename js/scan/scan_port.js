@@ -1,5 +1,5 @@
-const ipcRenderer = require('electron').ipcRenderer
-const ffi = require('ffi')
+let ipcRenderer = require('electron').ipcRenderer
+let ffi = require('ffi')
 let scan_port_c_api = ffi.Library(`${__dirname}/lib/cmake-build-debug/libport_scan_shared.dylib`, {
     'scan_port': ['pointer', ['string', 'int', 'int', 'int']],
     'scan_ip': ['pointer', ['uint32', 'uint32']]
@@ -26,15 +26,17 @@ ipcRenderer.on('start_scan', (event, args) => {
         scan_result = scan_port_c_api.scan_port(ip, start, end, args[3])
     }
     if (!scan_result.isNull()) {
+        console.log(scan_result)
         scan_result = scan_result.reinterpret(end - start + 1)
+        console.log(scan_result)
         scan_result.forEach((val, index) => {
-            if (val === 0) {
-                closeArray.push(index)
-            }else {
+            if (val === 1) {
                 openArray.push(index)
+            }else {
+                closeArray.push(index)
             }
         })
-        ipcRenderer.send('finish_scan', [true, [ip, openArray, closeArray, start]])
+        ipcRenderer.send('finish_scan', [true, [ip, start, openArray, closeArray], scan_result])
     }else {
         ipcRenderer.send('finish_scan', [false, null])
     }

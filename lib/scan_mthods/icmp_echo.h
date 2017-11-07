@@ -19,8 +19,8 @@
 #include <errno.h>
 
 #define ICMP_PACKAGE_SIZE 64
-#define ICMP_RECEIVE_SIZE 1024
-#define TIMEOUT 2
+#define ICMP_RECEIVE_SIZE 64
+#define TIMEOUT 1
 
 bool* scan_ip_by_icmp(u_int32_t, u_int32_t);
 

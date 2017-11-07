@@ -42,23 +42,45 @@ var action_bar = new Vue({
             loading.show_loading = true
             result_view.startNewScan()
 
-            if (method != 2) {
-                for (let i = start_scan_number; i <= end_scan_number; i++) {
-                    let temp_ip = translateNumberToIp(i)
-                    let close = (i === end_scan_number)
-                    startScan(temp_ip, start_port, end_port, method, (start, result) => {
-                        result_view.setScanResult(result[0], start, result[1], result[2])
-                        if (close) {
-                            loading.show_loading = false
-                        }
-                    })
-                }
-            } else {
-                startScan(translateNumberToIp(start_scan_number), start_scan_number, end_scan_number, method, (start, result) => {
-                    result_view.setIpScanRestlt(start, result[1], result[2])
-                    loading.show_loading = false
+            let taskList = createScanTask(start_scan_number, end_scan_number, start_port, end_port, method);
+            removeListener()
+            // if (method != 2) {
+            console.log(`task size = ${taskList.length}`)
+            taskList.forEach((value, index) => {
+                let ip_set = new Set()
+                value.forEach((task) => {
+                    ip_set.add(task[0])
                 })
-            }
+                multiProcessScan(Array.from(ip_set), value, (result) => {
+                    if (method != 2){
+                        result_view.setScanResult(result[0], result[1], result[2], result[3])
+                    }else{
+                        result_view.setIpScanRestlt(result[1], result[2], result[3])
+                    }
+                    if (index === taskList.length - 1) {
+                        loading.show_loading = false
+                    }
+                })
+            })
+            // }
+
+            // if (method != 2) {
+            //     for (let i = start_scan_number; i <= end_scan_number; i++) {
+            //         let temp_ip = translateNumberToIp(i)
+            //         let close = (i === end_scan_number)
+            //         startScan(temp_ip, start_port, end_port, method, (start, result) => {
+            //             result_view.setScanResult(result[0], start, result[1], result[2])
+            //             if (close) {
+            //                 loading.show_loading = false
+            //             }
+            //         })
+            //     }
+            // } else {
+            //     startScan(translateNumberToIp(start_scan_number), start_scan_number, end_scan_number, method, (start, result) => {
+            //         result_view.setIpScanRestlt(start, result[1], result[2])
+            //         loading.show_loading = false
+            //     })
+            // }
         }
     }
 })
@@ -108,15 +130,16 @@ function createScanTask(startIp, endIp, startPort, endPort, scanMethod) {
         }
     } else {
         //IP扫描
+        let task = []
         let count = parseInt((endIp - startIp + 1) / WORKING_PROCESS_COUNT) + 1
         for (let i = 0; i < WORKING_PROCESS_COUNT; i++) {
             let start = (i * count) + startIp
             start = start > endIp ? -1 : start
             let end = start + count - 1
             end = end > endIp ? endIp : end
-            let task = [translateNumberToIp(start), start, end, scanMethod]
-            args[i] = task
+            task.push([translateNumberToIp(start), start, end, scanMethod])
         }
+        args.push(task)
     }
     return args
 }

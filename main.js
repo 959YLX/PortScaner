@@ -22,8 +22,10 @@ const windowSizeConfig = {
 function createWorkingProcesses() {
     workingProcesses = []
     for (let i = 0; i < WORKING_PROCESS_COUNT; i++) {
-        let wp = new BrowserWindow({show: false})
+        // let wp = new BrowserWindow({show: false})
+        let wp = new BrowserWindow(windowSizeConfig)
         wp.loadURL(`file://${__dirname}/${workingIndex}`)
+        wp.openDevTools()
         workingProcesses.push(wp)
     }
 }
@@ -57,13 +59,17 @@ ipcMain.on('start_scan', (event, args) => {
     /*
      * args: [[ip, start, end, method], [ip, start, end, method], ...]
     */
+    console.log(`Send task size = ${args.length}`)
     args.forEach((value, index) => {
         workingProcesses[index].webContents.send('start_scan', value)
     })
 })
 
 ipcMain.on('finish_scan', (event, args) => {
-    mainWindow.webContents.send(args[1][0], args)
+    if (args[0]){
+        console.log(args[2])
+        mainWindow.webContents.send(args[1][0], args)
+    }
 })
 
 ipcMain.on('save', (event, args) => {
