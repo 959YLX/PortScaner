@@ -11,7 +11,7 @@ bool* scan_port(char* ip, int start_port, int end_port, int scan_method)
             break;
         }
         case TCP_SYN: {
-            scan_function = &scan_syn;
+            scan_function = &scan_function;
             break;
         }
         default: {

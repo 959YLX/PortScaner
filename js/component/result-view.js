@@ -67,14 +67,12 @@ var result_view = new Vue({
             closePort.forEach((val) => {
                 this.closeResultSet.push([ip, val + start_port])
             })
-
             if (this.closeResultSet.length + this.openResultSet.length === this.total) {
                 this.open = `${OPEN_PORT_RESULT_TITLE}(${this.openResultSet.length}个)`
                 this.close = `${CLOSE_PORT_RESULT_TITLE}(${this.closeResultSet.length}个)`
                 this.scan_port_type = true
                 loading.show_loading = false
             }
-
         },
         setIpScanRestlt(start, open, close) {
             this.table_header = IP_SCAN_TITLE
@@ -84,15 +82,12 @@ var result_view = new Vue({
             close.forEach((value, index) => {
                 this.closeResultSet.push([index + 1, translateNumberToIp(value + start)])
             })
-
             if (this.closeResultSet.length + this.openResultSet.length === this.total) {
                 this.open = `${EXIST_IP_TITLE}(${this.openResultSet.length}个)`
                 this.close = `${NOT_EXIST_IP_TITLE}(${this.closeResultSet.length}个)`
                 this.scan_port_type = false
                 loading.show_loading = false
             }
-
-
         },
         startNewScan(total) {
             this.openResultSet = []
